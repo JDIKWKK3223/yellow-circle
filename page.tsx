@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+<div className="bg-blue-500 text-white p-4">Tailwind Test: This should be blue with white text</div>
 
 export default function Home() {
   const [data, setData] = useState<any[]>([]); // State to store fetched data
