@@ -13,17 +13,19 @@ body {
   width: 50vw;    /* Table takes up 50% of the viewport width */
   height: 50vh;   /* Table takes up 50% of the viewport height */
   border-collapse: collapse; /* Ensure borders are collapsed into a single line */
+  table-layout: fixed; /* Make table cells have fixed width */
 }
 
 /* Table cell styles */
 .table td {
-  width: 10%; /* Make each cell occupy 10% of the table width */
-  height: 10%; /* Make each cell occupy 10% of the table height */
+  width: 10%;     /* Make each cell occupy 10% of the table width */
+  height: 10%;    /* Make each cell occupy 10% of the table height */
   border: 3px solid grey; /* Set 3px grey borders for each cell */
+  text-align: center;
+  vertical-align: middle;  /* Center text vertically */
 }
 
-/* Optional: Add some padding and alignment for the cells */
-.table td {
-  text-align: center;
-  vertical-align: middle;
+/* Equal height for table rows */
+.table tr {
+  height: 10%; /* Set height of each row to 1/10th of the table's height */
 }
