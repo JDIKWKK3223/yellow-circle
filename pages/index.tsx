@@ -13,6 +13,12 @@ export default function Home() {
   const startX = useRef(0);
   const startWidth = useRef(0);
 
+  // Sort state
+  const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' }>({
+    key: '',
+    direction: 'asc',
+  });
+
   // Fetch CSV data
   useEffect(() => {
     const fetchData = async () => {
@@ -68,6 +74,30 @@ export default function Home() {
     };
   }, [columnWidths]);
 
+  // Function to sort the table
+  const handleSort = (key: string) => {
+    let direction: 'asc' | 'desc' = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    
+    const sortedData = [...data].sort((a, b) => {
+      const aValue = a[headers.indexOf(key)];
+      const bValue = b[headers.indexOf(key)];
+
+      if (aValue < bValue) {
+        return direction === 'asc' ? -1 : 1;
+      }
+      if (aValue > bValue) {
+        return direction === 'asc' ? 1 : -1;
+      }
+      return 0;
+    });
+
+    setSortConfig({ key, direction });
+    setData(sortedData);
+  };
+
   return (
     <div style={{ padding: '16px' }}>
       <h1 style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>
@@ -80,6 +110,7 @@ export default function Home() {
               {headers.map((header, index) => (
                 <th
                   key={index}
+                  onClick={() => handleSort(header)}
                   style={{
                     padding: '8px',
                     textAlign: 'left',
