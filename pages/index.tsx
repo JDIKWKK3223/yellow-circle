@@ -3,77 +3,70 @@
 import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const [data, setData] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<string[][]>([]); // Stores rows of data from the CSV
+  const [headers, setHeaders] = useState<string[]>([]); // Stores the headers from the CSV
+  const [error, setError] = useState<string | null>(null); // Error handling state
 
+  // Fetch and parse the CSV data
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       try {
-        const response = await fetch('/api/fetchData');
+        const response = await fetch('/data/products.csv');
         if (!response.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error(`Failed to fetch CSV: ${response.statusText}`);
         }
-        const result = await response.json();
-        setData(result);
+
+        const text = await response.text();
+        const rows = text.split('\n').filter(row => row.trim() !== ''); // Filter out empty rows
+        const headerRow = rows[0].split(','); // Extract headers from the first row
+        const dataRows = rows.slice(1).map(row => row.split(',')); // Extract data rows
+
+        setHeaders(headerRow);
+        setData(dataRows);
       } catch (err: any) {
         setError(err.message);
-      } finally {
-        setLoading(false);
       }
-    }
+    };
+
     fetchData();
   }, []);
 
-  if (loading) return <p style={{ backgroundColor: 'yellow', padding: '16px' }}>Loading...</p>;
-  if (error) return <p style={{ backgroundColor: 'red', color: 'white', padding: '16px' }}>Error: {error}</p>;
+  // Render loading, error, or table
+  if (error) {
+    return <p style={{ color: 'red', textAlign: 'center' }}>Error: {error}</p>;
+  }
+
+  if (data.length === 0) {
+    return <p style={{ textAlign: 'center', padding: '16px' }}>Loading data...</p>;
+  }
 
   return (
     <div style={{ padding: '16px' }}>
-      <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>
-        Grocery Store Products
+      <h1 style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>
+        Product Data
       </h1>
-      {data.length > 0 ? (
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '16px' }}>
-          <thead>
-            <tr>
-              {Object.keys(data[0]).map((key) => (
-                <th
-                  key={key}
-                  style={{
-                    border: '1px solid black',
-                    padding: '8px',
-                    backgroundColor: '#f2f2f2',
-                    textAlign: 'left',
-                  }}
-                >
-                  {key}
-                </th>
+      <table style={{ border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}>
+        <thead>
+          <tr>
+            {headers.map((header, index) => (
+              <th key={index} style={{ border: '1px solid black', padding: '8px', backgroundColor: '#f0f0f0' }}>
+                {header}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {row.map((cell, cellIndex) => (
+                <td key={cellIndex} style={{ border: '1px solid black', padding: '8px' }}>
+                  {cell}
+                </td>
               ))}
             </tr>
-          </thead>
-          <tbody>
-            {data.map((row, index) => (
-              <tr key={index}>
-                {Object.values(row).map((value, idx) => (
-                  <td
-                    key={idx}
-                    style={{
-                      border: '1px solid black', // Add inside borders
-                      padding: '8px',
-                      textAlign: 'left',
-                    }}
-                  >
-                    {value}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p style={{ backgroundColor: '#f9f9f9', padding: '16px' }}>No data available</p>
-      )}
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
