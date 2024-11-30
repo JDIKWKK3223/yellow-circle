@@ -1,19 +1,28 @@
-import fs from 'fs';
-import path from 'path';
-import csv from 'csv-parser'; // Install this package via npm
+import { NextApiRequest, NextApiResponse } from 'next';
+import { createClient } from '@supabase/supabase-js';
 
-export default function handler(req, res) {
-  const results = [];
-  const csvFilePath = path.resolve('public/data/products.csv'); // Make sure the CSV file is in public/data/
+// Initialize Supabase client
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+  process.env.NEXT_PUBLIC_SUPABASE_KEY || ''
+);
 
-  fs.createReadStream(csvFilePath)
-    .pipe(csv()) // Parses the CSV file
-    .on('data', (data) => results.push(data)) // Collect the rows
-    .on('end', () => {
-      res.status(200).json(results); // Send the parsed data as a JSON response
-    })
-    .on('error', (error) => {
-      console.error(error);
-      res.status(500).json({ error: 'Failed to read CSV file' });
-    });
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    // Fetch all data from the 'master' table
+    const { data, error } = await supabase
+      .from('master') // Use your table name here
+      .select('*'); // Fetch all columns dynamically
+
+    if (error) {
+      // Return an error response if the query fails
+      return res.status(500).json({ error: error.message });
+    }
+
+    // Return the fetched data as JSON
+    return res.status(200).json(data);
+  } catch (err) {
+    // Catch any unexpected errors
+    return res.status(500).json({ error: 'Unexpected error occurred' });
+  }
 }
