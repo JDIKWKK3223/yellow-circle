@@ -18,8 +18,8 @@ body {
 
 /* Table cell styles */
 .table td {
-  width: 10%;     /* Make each cell occupy 10% of the table width */
-  height: 10%;    /* Make each cell occupy 10% of the table height */
+  width: 2.22%;     /* Make each cell occupy 2.22% of the table width (100 / 45 = 2.22%) */
+  height: 10%;      /* Make each cell occupy 10% of the table height (10 rows) */
   border: 3px solid grey; /* Set 3px grey borders for each cell */
   text-align: center;
   vertical-align: middle;  /* Center text vertically */
