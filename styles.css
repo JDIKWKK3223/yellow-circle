@@ -1,16 +1,17 @@
+/* Center the circle in the viewport and set background color for body */
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
-  }
-  
-  .circle {
-    width: 100px;
-    height: 100px;
-    background-color: yellow;
-    border-radius: 50%;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;          /* Full viewport height */
+  margin: 0;
+  background-color: #f0f0f0; /* Light gray background (optional) */
+}
+
+/* Make the circle fill the entire screen */
+.circle {
+  width: 100vmin;          /* Takes the smallest dimension of the viewport */
+  height: 100vmin;         /* To make it a perfect circle */
+  background-color: orange; /* Fill circle with orange */
+  border-radius: 50%;      /* This makes the div into a circle */
+}
