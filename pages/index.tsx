@@ -39,6 +39,8 @@ export default function Home() {
                     textTransform: 'uppercase',
                     borderBottom: '2px solid rgba(0, 0, 0, 0.5)',
                     whiteSpace: 'nowrap', // Prevent word wrap for headers
+                    overflow: 'hidden', // Hide overflowed content
+                    textOverflow: 'ellipsis', // Show ellipsis for overflowed content
                   }}
                 >
                   {header}
@@ -62,8 +64,8 @@ export default function Home() {
                       padding: '8px',
                       textAlign: 'left',
                       whiteSpace: 'nowrap', // Prevent word wrap for cells
-                      overflow: 'hidden', // Ensure content doesn't overflow
-                      textOverflow: 'ellipsis', // Add ellipsis if content is too long
+                      overflow: 'hidden', // Hide overflowed content
+                      textOverflow: 'ellipsis', // Show ellipsis for overflowed content
                     }}
                   >
                     {cell}
