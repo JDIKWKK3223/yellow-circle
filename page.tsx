@@ -1,12 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-<div className="bg-blue-500 text-white p-4">Tailwind Test: This should be blue with white text</div>
 
 export default function Home() {
-  const [data, setData] = useState<any[]>([]); // State to store fetched data
-  const [loading, setLoading] = useState(true); // State for loading indicator
-  const [error, setError] = useState<string | null>(null); // State for error handling
+  const [data, setData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -31,9 +30,14 @@ export default function Home() {
   if (error) return <p className="bg-red-500 text-white p-4">Error: {error}</p>;
 
   return (
-    <div className="text-blue-500 p-4">
-      {/* Entire page text is blue */}
-      <h1 className="text-3xl font-bold mb-4">Grocery Store Products</h1>
+    <div className="p-4">
+      {/* Add the Tailwind test element here */}
+      <div className="bg-blue-500 text-white p-4 mb-4">
+        Tailwind Test: This should be blue with white text
+      </div>
+
+      {/* Rest of your page */}
+      <h1 className="text-xl font-bold mb-4">Grocery Store Products</h1>
       {data.length > 0 ? (
         <table className="table-auto border-collapse border border-gray-300 w-full">
           <thead>
