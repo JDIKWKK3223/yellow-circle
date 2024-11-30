@@ -10,42 +10,42 @@ export default function Home() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch('/api/fetchData'); // Fetch data from API
+        const response = await fetch('/api/fetchData');
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
-        const result = await response.json(); // Parse JSON response
-        setData(result); // Save data to state
+        const result = await response.json();
+        setData(result);
       } catch (err: any) {
-        setError(err.message); // Save error to state
+        setError(err.message);
       } finally {
-        setLoading(false); // End loading state
+        setLoading(false);
       }
     }
-    fetchData(); // Call fetchData on mount
+    fetchData();
   }, []);
 
-  // Show loading or error messages if necessary
-  if (loading) return <p className="bg-yellow-200 p-4">Loading...</p>;
-  if (error) return <p className="bg-red-500 text-white p-4">Error: {error}</p>;
+  if (loading) return <p style={{ backgroundColor: 'yellow', padding: '16px' }}>Loading...</p>;
+  if (error) return <p style={{ backgroundColor: 'red', color: 'white', padding: '16px' }}>Error: {error}</p>;
 
   return (
-    <div className="p-4">
-      {/* Add the Tailwind test element here */}
-      <div className="bg-blue-500 text-white p-4 mb-4">
-        Tailwind Test: This should be blue with white text
-      </div>
-
-      {/* Rest of your page */}
-      <h1 className="text-xl font-bold mb-4">Grocery Store Products</h1>
+    <div style={{ padding: '16px' }}>
+      <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>
+        Grocery Store Products
+      </h1>
       {data.length > 0 ? (
-        <table className="table-auto border-collapse border border-gray-300 w-full">
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '16px' }}>
           <thead>
-            <tr className="bg-gray-200">
+            <tr>
               {Object.keys(data[0]).map((key) => (
                 <th
                   key={key}
-                  className="border border-gray-400 px-4 py-2 text-left"
+                  style={{
+                    border: '1px solid black',
+                    padding: '8px',
+                    backgroundColor: '#f2f2f2',
+                    textAlign: 'left',
+                  }}
                 >
                   {key}
                 </th>
@@ -58,7 +58,11 @@ export default function Home() {
                 {Object.values(row).map((value, idx) => (
                   <td
                     key={idx}
-                    className="border border-gray-400 px-4 py-2 text-left"
+                    style={{
+                      border: '1px solid black', // Add inside borders
+                      padding: '8px',
+                      textAlign: 'left',
+                    }}
                   >
                     {value}
                   </td>
@@ -68,7 +72,7 @@ export default function Home() {
           </tbody>
         </table>
       ) : (
-        <p className="bg-gray-100 p-4">No data available</p>
+        <p style={{ backgroundColor: '#f9f9f9', padding: '16px' }}>No data available</p>
       )}
     </div>
   );
