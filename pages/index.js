@@ -7,7 +7,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       // Fetch the CSV file from the public/data directory
-      const response = await fetch('/public/data/products.csv');
+      const response = await fetch('/data/products.csv');
       const text = await response.text();
       
       // Split the CSV into rows
