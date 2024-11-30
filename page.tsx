@@ -26,32 +26,22 @@ export default function Home() {
   }, []);
 
   // Show loading or error messages if necessary
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p style={{ color: 'red' }}>Error: {error}</p>;
+  if (loading) return <p className="bg-yellow-200 p-4">Loading...</p>; // Test Tailwind class
+  if (error) return <p className="bg-red-500 text-white p-4">Error: {error}</p>; // Test Tailwind class
 
   return (
-    <div>
-      <h1>Grocery Store Products</h1>
+    <div className="p-4">
+      <h1 className="text-xl font-bold bg-blue-500 text-white p-4 mb-4">
+        Grocery Store Products (Tailwind Test)
+      </h1>
       {data.length > 0 ? (
-        <table
-          style={{
-            borderCollapse: 'collapse',
-            width: '100%',
-            marginTop: '20px',
-          }}
-        >
+        <table className="table-auto border-collapse border border-gray-300 w-full">
           <thead>
-            <tr>
-              {/* Dynamically generate headers */}
+            <tr className="bg-gray-200">
               {Object.keys(data[0]).map((key) => (
                 <th
                   key={key}
-                  style={{
-                    border: '1px solid black',
-                    padding: '8px',
-                    backgroundColor: '#f2f2f2',
-                    textAlign: 'left',
-                  }}
+                  className="border border-gray-400 px-4 py-2 text-left"
                 >
                   {key}
                 </th>
@@ -59,17 +49,12 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            {/* Dynamically generate rows */}
             {data.map((row, index) => (
               <tr key={index}>
                 {Object.values(row).map((value, idx) => (
                   <td
                     key={idx}
-                    style={{
-                      border: '1px solid black',
-                      padding: '8px',
-                      textAlign: 'left',
-                    }}
+                    className="border border-gray-400 px-4 py-2 text-left"
                   >
                     {value}
                   </td>
@@ -79,7 +64,7 @@ export default function Home() {
           </tbody>
         </table>
       ) : (
-        <p>No data available</p>
+        <p className="bg-gray-100 p-4">No data available</p>
       )}
     </div>
   );
