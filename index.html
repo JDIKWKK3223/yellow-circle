@@ -1,29 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Table Display</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <table class="table">
-      <tbody>
-        <!-- Create 30 rows with 45 cells each -->
-        <!-- Each row will automatically take up 1/30th of the height of the table -->
-        <tr>
-          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-          <td></td><td></td><td></td><td></td><td></td>
-        </tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-          <td></td><td></td><td></td><td></td><td></td></tr>
-        <!-- Repeat this row 28 more times to create a total of 30 rows -->
-        <!-- Copy and paste this <tr> block 28 more times -->
-      </tbody>
-    </table>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Table</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- The table will be dynamically created here -->
+  <table class="table" id="dynamic-table"></table>
+
+  <script src="script.js"></script>
+</body>
 </html>
