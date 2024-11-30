@@ -1,38 +1,41 @@
-'use client'; // Ensures this runs on the client side
+'use client';
 
 import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const [data, setData] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<any[]>([]); // State to store fetched data
+  const [loading, setLoading] = useState(true); // State for loading indicator
+  const [error, setError] = useState<string | null>(null); // State for error handling
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch('/api/fetchData');
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const result = await response.json();
-        setData(result);
+        const response = await fetch('/api/fetchData'); // Call API endpoint
+        const result = await response.json(); // Parse JSON response
+
+        console.log('Fetched Data:', result); // Debug log for fetched data structure
+
+        setData(result); // Save fetched data to state
       } catch (err: any) {
-        setError(err.message);
+        console.error('Error fetching data:', err); // Log any errors
+        setError(err.message); // Save error message to state
       } finally {
-        setLoading(false);
+        setLoading(false); // Ensure loading is set to false after fetch
       }
     }
-    fetchData();
-  }, []);
+    fetchData(); // Call fetchData function on component mount
+  }, []); // Empty dependency array ensures this runs once on mount
+
+  // Render loading state
+  if (loading) return <p>Loading...</p>;
+
+  // Render error state
+  if (error) return <p style={{ color: 'red' }}>Error: {error}</p>;
 
   return (
     <div>
       <h1>Grocery Store Products</h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p style={{ color: 'red' }}>Error: {error}</p>
-      ) : data.length > 0 ? (
+      {data.length > 0 ? (
         <table style={{ borderCollapse: 'collapse', width: '100%' }}>
           <thead>
             <tr>
