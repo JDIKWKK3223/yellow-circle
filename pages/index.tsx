@@ -41,6 +41,7 @@ export default function Home() {
                     whiteSpace: 'nowrap', // Prevent word wrap for headers
                     overflow: 'hidden', // Hide overflowed content
                     textOverflow: 'ellipsis', // Show ellipsis for overflowed content
+                    minWidth: '150px', // Ensure there's enough space for text (adjust based on content)
                   }}
                 >
                   {header}
@@ -65,7 +66,8 @@ export default function Home() {
                       textAlign: 'left',
                       whiteSpace: 'nowrap', // Prevent word wrap for cells
                       overflow: 'hidden', // Hide overflowed content
-                      textOverflow: 'ellipsis', // Show ellipsis for overflowed content
+                      textOverflow: 'ellipsis', // Add ellipsis if content is too long
+                      minWidth: '150px', // Ensures minimum space for content
                     }}
                   >
                     {cell}
