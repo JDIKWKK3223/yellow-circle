@@ -1,57 +1,79 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 
-const Home = () => {
-  const [data, setData] = useState([]);
-  const [headers, setHeaders] = useState([]);
+export default function Home() {
+  const [data, setData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      // Fetch the CSV file from the public/data directory
-      const response = await fetch('/data/products.csv');
-      const text = await response.text();
-      
-      // Split the CSV into rows
-      const rows = text.split('\n');
-
-      // Get the headers (first row)
-      const headerRow = rows[0].split(',');
-
-      // Set headers and data (skipping the first row for data)
-      setHeaders(headerRow);
-      const dataRows = rows.slice(1).map(row => row.split(','));
-      setData(dataRows);
-    };
-
+    async function fetchData() {
+      try {
+        const response = await fetch('/api/fetchData');
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const result = await response.json();
+        setData(result);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
     fetchData();
   }, []);
 
+  if (loading) return <p style={{ backgroundColor: 'yellow', padding: '16px' }}>Loading...</p>;
+  if (error) return <p style={{ backgroundColor: 'red', color: 'white', padding: '16px' }}>Error: {error}</p>;
+
   return (
-    <div>
-      <h1>Product Data</h1>
-      
-      {/* Display the table */}
-      <table>
-        <thead>
-          <tr>
-            {/* Dynamically render table headers from CSV */}
-            {headers.map((header, index) => (
-              <th key={index}>{header}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {/* Dynamically render rows from CSV */}
-          {data.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {row.map((cell, cellIndex) => (
-                <td key={cellIndex}>{cell}</td>
+    <div style={{ padding: '16px' }}>
+      <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>
+        Grocery Store Products
+      </h1>
+      {data.length > 0 ? (
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '16px' }}>
+          <thead>
+            <tr>
+              {Object.keys(data[0]).map((key) => (
+                <th
+                  key={key}
+                  style={{
+                    border: '1px solid black',
+                    padding: '8px',
+                    backgroundColor: '#f2f2f2',
+                    textAlign: 'left',
+                  }}
+                >
+                  {key}
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {data.map((row, index) => (
+              <tr key={index}>
+                {Object.values(row).map((value, idx) => (
+                  <td
+                    key={idx}
+                    style={{
+                      border: '1px solid black', // Add inside borders
+                      padding: '8px',
+                      textAlign: 'left',
+                    }}
+                  >
+                    {value}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p style={{ backgroundColor: '#f9f9f9', padding: '16px' }}>No data available</p>
+      )}
     </div>
   );
-};
-
-export default Home;
+}
