@@ -26,14 +26,13 @@ export default function Home() {
   }, []);
 
   // Show loading or error messages if necessary
-  if (loading) return <p className="bg-yellow-200 p-4">Loading...</p>; // Test Tailwind class
-  if (error) return <p className="bg-red-500 text-white p-4">Error: {error}</p>; // Test Tailwind class
+  if (loading) return <p className="bg-yellow-200 p-4">Loading...</p>;
+  if (error) return <p className="bg-red-500 text-white p-4">Error: {error}</p>;
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold bg-blue-500 text-white p-4 mb-4">
-        Grocery Store Products (Tailwind Test)
-      </h1>
+    <div className="text-blue-500 p-4">
+      {/* Entire page text is blue */}
+      <h1 className="text-3xl font-bold mb-4">Grocery Store Products</h1>
       {data.length > 0 ? (
         <table className="table-auto border-collapse border border-gray-300 w-full">
           <thead>
