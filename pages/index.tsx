@@ -33,13 +33,36 @@ export default function Home() {
     fetchData();
   }, []);
 
+  // Adjust column widths after table data is loaded
+  const adjustColumnWidths = () => {
+    const table = document.getElementById('productTable') as HTMLTableElement;
+    const rows = table.rows;
+    const cellWidths = Array.from(rows[0].cells).map((_, colIndex) => {
+      let maxWidth = 0;
+      Array.from(rows).forEach(row => {
+        const cell = row.cells[colIndex];
+        const cellWidth = cell.scrollWidth;
+        maxWidth = Math.max(maxWidth, cellWidth);
+      });
+      return maxWidth + 20; // Adding some padding for visual clarity
+    });
+    setColumnWidths(cellWidths);
+  };
+
+  useEffect(() => {
+    // Adjust column widths once data is loaded
+    if (data.length > 0) {
+      adjustColumnWidths();
+    }
+  }, [data]);
+
   return (
     <div style={{ padding: '16px' }}>
       <h1 style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>
         Product Data
       </h1>
       <div style={{ overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed' }}>
+        <table id="productTable" style={{ width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed' }}>
           <thead style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: '#f0f0f0' }}>
             <tr>
               {headers.map((header, index) => (
@@ -50,9 +73,9 @@ export default function Home() {
                     textAlign: 'left',
                     textTransform: 'uppercase',
                     borderBottom: '2px solid rgba(0, 0, 0, 0.5)',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap', // Prevent word wrap for headers
+                    overflow: 'hidden', // Hide overflowed content
+                    textOverflow: 'ellipsis', // Show ellipsis if content overflows
                     minWidth: `${columnWidths[index]}px`, // Dynamic width based on content
                   }}
                 >
@@ -76,9 +99,9 @@ export default function Home() {
                       borderTop: '1px solid rgba(0, 0, 0, 0.5)', // Inside borders only
                       padding: '8px',
                       textAlign: 'left',
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap', // Prevent word wrap for cells
+                      overflow: 'hidden', // Hide overflowed content
+                      textOverflow: 'ellipsis', // Show ellipsis if content overflows
                       minWidth: `${columnWidths[cellIndex]}px`, // Dynamic width based on content
                     }}
                   >
