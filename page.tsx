@@ -10,36 +10,39 @@ export default function Home() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch('/api/fetchData'); // Call API endpoint
+        const response = await fetch('/api/fetchData'); // Fetch data from API
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
         const result = await response.json(); // Parse JSON response
-
-        console.log('Fetched Data:', result); // Debug log for fetched data structure
-
-        setData(result); // Save fetched data to state
+        setData(result); // Save data to state
       } catch (err: any) {
-        console.error('Error fetching data:', err); // Log any errors
-        setError(err.message); // Save error message to state
+        setError(err.message); // Save error to state
       } finally {
-        setLoading(false); // Ensure loading is set to false after fetch
+        setLoading(false); // End loading state
       }
     }
-    fetchData(); // Call fetchData function on component mount
-  }, []); // Empty dependency array ensures this runs once on mount
+    fetchData(); // Call fetchData on mount
+  }, []);
 
-  // Render loading state
+  // Show loading or error messages if necessary
   if (loading) return <p>Loading...</p>;
-
-  // Render error state
   if (error) return <p style={{ color: 'red' }}>Error: {error}</p>;
 
   return (
     <div>
       <h1>Grocery Store Products</h1>
       {data.length > 0 ? (
-        <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+        <table
+          style={{
+            borderCollapse: 'collapse',
+            width: '100%',
+            marginTop: '20px',
+          }}
+        >
           <thead>
             <tr>
-              {/* Dynamically generate table headers */}
+              {/* Dynamically generate headers */}
               {Object.keys(data[0]).map((key) => (
                 <th
                   key={key}
@@ -56,7 +59,7 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            {/* Dynamically generate table rows */}
+            {/* Dynamically generate rows */}
             {data.map((row, index) => (
               <tr key={index}>
                 {Object.values(row).map((value, idx) => (
