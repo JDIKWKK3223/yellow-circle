@@ -120,11 +120,17 @@ export default function Home() {
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     width: `${columnWidths[index]}px`, // Set dynamic width
-                    cursor: 'col-resize',
+                    cursor: 'pointer', // Change cursor to pointer for sorting
                     position: 'relative',
+                    backgroundColor: sortConfig.key === header ? '#e0e0e0' : '', // Highlight sorted column
                   }}
                 >
                   {header}
+                  {sortConfig.key === header ? (
+                    <span style={{ marginLeft: '8px' }}>
+                      {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                    </span>
+                  ) : null}
                   <div
                     style={{
                       position: 'absolute',
