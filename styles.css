@@ -1,13 +1,3 @@
-/* Make the body fill the entire screen and center the table */
-body {
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center;     /* Center vertically */
-  background-color: #f0f0f0; /* Light background color */
-}
-
 /* Table styles */
 .table {
   width: 50vw;    /* Table takes up 50% of the viewport width */
