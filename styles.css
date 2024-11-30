@@ -1,17 +1,29 @@
-/* Center the circle in the viewport and set background color for body */
+/* Make the body fill the entire screen and center the table */
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;          /* Full viewport height */
   margin: 0;
-  background-color: #f0f0f0; /* Light gray background (optional) */
+  height: 100vh;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;     /* Center vertically */
+  background-color: #f0f0f0; /* Light background color */
 }
 
-/* Make the circle fill the entire screen */
-.circle {
-  width: 100vmin;          /* Takes the smallest dimension of the viewport */
-  height: 100vmin;         /* To make it a perfect circle */
-  background-color: orange; /* Fill circle with orange */
-  border-radius: 50%;      /* This makes the div into a circle */
+/* Table styles */
+.table {
+  width: 50vw;    /* Table takes up 50% of the viewport width */
+  height: 50vh;   /* Table takes up 50% of the viewport height */
+  border-collapse: collapse; /* Ensure borders are collapsed into a single line */
+}
+
+/* Table cell styles */
+.table td {
+  width: 10%; /* Make each cell occupy 10% of the table width */
+  height: 10%; /* Make each cell occupy 10% of the table height */
+  border: 3px solid grey; /* Set 3px grey borders for each cell */
+}
+
+/* Optional: Add some padding and alignment for the cells */
+.table td {
+  text-align: center;
+  vertical-align: middle;
 }
